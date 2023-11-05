@@ -8,14 +8,14 @@
 
 <body>
     <header>
-        <h1>Välkommen till Hamburgarstugan</h1>
+        <h1>Welcome to Hamburgarstugan!</h1>
     </header>
     <h3>
         <nav> Menu items </nav>
     </h3>
 
     <main>
-
+        <section>
         <div style="display: inline-block;">
             <p>
             <h2>Mr Bacon</h2>
@@ -24,9 +24,9 @@
                 alt="Mr Bacon" style="width: 200px;">
             <div>
                 <ul>
-                    <li>200 gram svenskt nötkött</li>
-                    <li>Bacon, jalapeno, barbequesås</li>
-                    <li>Innehåller gluten och laktos</li>
+                    <li>200 grams of swedish beef</li>
+                    <li>Bacon, jalapeno, barbequesauce</li>
+                    <li>Contains gluten or lactose</li>
                 </ul>
             </div>
         </div>
@@ -43,9 +43,9 @@
                 alt="Mr Cheese" style="width: 200px;">
             <div>
                 <ul>
-                    <li>200 gram svenskt nötkött</li>
-                    <li>Två skivor pepprig gräddost</li>
-                    <li>Innehåller gluten och laktos</li>
+                    <li>200 grams of swedish beef</li>
+                    <li>Two slices of spicy cheese</li>
+                    <li>Contains gluten or lactose</li>
                 </ul>
             </div>
         </div>
@@ -61,45 +61,81 @@
                 alt="Mr Cheese" style="width: 200px;">
             <div>
                 <ul>
-                    <li>200 gram krispig svensk kyckling</li>
-                    <li>Glutenfritt briochebröd</li>
-                    <li>Innehåller ej gluten eller laktos</li>
+                    <li>200 grams of swedish chicken</li>
+                    <li>Lactose-free brioche bun</li>
+                    <li>Does not contain gluten or lactose</li>
                 </ul>
             </div>
         </div>
-
+</section>
 
         <section>
             <p>
-            <h4>Om oss:</h4>
-                Vi är en lokal hamburgarresturang lokaliserade i Uppsala. Välkommen!
+            <h4>About us:</h4>We are a local hamburger restaurant located in Uppsala. Welcome!
+
             </p>
         </section>
-        
+
         <section id="contact">
             <form>
                 <fieldset>
                     <p>
-                        <label for="fullname">Ditt namn</label><br>
-                        <input type="text" id="fullname" name="fn" required="required" placeholder="För- och efternamn">
+                        <label for="fullname">Your name</label><br>
+                        <input type="text" id="fullname" name="fn" required="required" placeholder="First- and Last name">
+                    </p>
+
+                    <p>
+                        <label for="email">E-mail</label><br>
+                        <input type="text" id="email" name="em" required="required" placeholder="E-mailaddress">
                     </p>
                     <p>
-                        <label for="lastname">Last</label><br>
-                        <input type="text" id="lastname" name="ln" placeholder="Last name">
+                        <label for="streetname">Street</label><br>
+                        <input type="text" id="streetname" name="ln" placeholder="Streetname">
                     </p>
                     <p>
-                        <label for="e-postadress">Mail</label><br>
-                        <input type="email" id="email" name="em" required="required" placeholder="E-mail address">
+                        <label for="housenumber">House</label><br>
+                        <input type="number" id="housenumber" name="ln" placeholder="Housenumber">
                     </p>
+                    <p>
+                        <label for="payment">Choose payment method</label>
+                        <be>
+                            <select id="payment" name="pay">
+                                <option>Card</option>
+                                <option>Swish</option>
+                                <option>Invoice</option>
+                                <option>Cash</option>
+                            </select>
+                    </p>
+                    <legend>Gender:</legend>
+
+                    <div>
+                        <input type="radio" id="Male" name="drone" value="Male" checked />
+                        <label for="Male">Male</label>
+                    </div>
+
+                    <div>
+                        <input type="radio" id="Female" name="drone" value="Female" />
+                        <label for="Female">Female</label>
+                    </div>
+
+                    <div>
+                        <input type="radio" id="Do not wish to provide" name="drone" value="Do not wish to provide" />
+                        <label for="Do not wish to provide">Do not wish to provide</label>
+                    </div>
                 </fieldset>
             </form>
         </section>
+        <br>
+        <button type="submit">
+            <img src="https://img.freepik.com/premium-vector/free-shipping-sticker-free-delivery-badge-with-truck-vector-isolated-background-eps-10_399089-2425.jpg?w=740" style="width: 30px;">
+            Send Info
+        </button>
+    </main>
 
-</main>
-
-        <footer>
-            <hr> Hamburgarstugan AB &copy
-            <hr>
-        </footer> </body>
+    <footer>
+        <hr> Hamburgarstugan AB &copy
+        <hr>
+    </footer>
+</body>
 
 </html>
