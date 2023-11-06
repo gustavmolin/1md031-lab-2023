@@ -1,0 +1,20 @@
+body {
+
+     
+     #ingr {
+        font-weight: bold;
+     }
+     #burgerinfo {
+        background-color: black;
+        color: white;
+     }
+    font-size: 1.1em;
+    font-family: arial;
+    
+  }
+  
+  
+  h1 {
+    color: blue;
+    margin-right: 30px;
+  }
