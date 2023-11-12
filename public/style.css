@@ -1,6 +1,6 @@
 body {
-   
-  
+
+
    h1 {
       color: blue;
       margin-right: 30px;
@@ -13,9 +13,12 @@ body {
 
 
 
-.main, header, footer, nav ul {
-    max-width: 80rem;
-    margin: 0 auto 0 auto;
+.main,
+header,
+footer,
+nav ul {
+   max-width: 80rem;
+   margin: 0 auto 0 auto;
 }
 
 .wrapper {
@@ -35,16 +38,17 @@ body {
 
 
 
- header h1 {
+header h1 {
    position: relative;
    text-align: center;
    margin-top: -48%;
-   
-   
+
+
 }
+
 @media screen and (min-width: 1920px) {
    header h1 {
-       margin-top: -95%;
+      margin-top: -90%;
    }
 }
 
@@ -52,7 +56,7 @@ body {
    margin-left: 10px;
    margin-right: 10px;
    position: relative;
-   overflow:hidden;
+   overflow: hidden;
    height: 220px;
    width: 100%;
 }
@@ -61,7 +65,7 @@ body {
    opacity: 0.65;
    width: 100%;
    height: auto;
-   
+
 
 }
 
@@ -79,6 +83,16 @@ button:hover {
    cursor: pointer;
 }
 
+.burger {
+   /* Adjust the properties as needed */
+   background-color: #000000;
+   width: 100%;
+   margin: auto;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+ }
+/*
 #ingr {
    font-weight: bold;
    margin-left: 5px;
