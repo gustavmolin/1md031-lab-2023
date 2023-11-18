@@ -11,6 +11,9 @@
               <li>Contains <span>{{ burger.containsLactose ? 'lactose' : 'no lactose' }}</span></li>
               <li>Contains <span>{{ burger.containsGluten ? 'gluten' : 'no gluten' }}</span></li>
             </ul> </p>
+            <p>Amount ordered: {{ amountOrdered }}</p>
+            <button v-on:click="increaseAmount">Increase</button>
+            <button v-on:click="decreaseAmount">Decrease</button>
         </div>
     
 </template>
@@ -18,15 +21,31 @@
 <script>
 export default {
   props: {
-    burger:{
+    burger: {
       type: Object,
-    required: true
+      required: true,
+    },
+  },
+  data: function () {
+    return {
+      amountOrdered: 0,
+      orderedBurgers: [],
+    }
+  },
+  methods: {
+    increaseAmount: function () {
+      this.amountOrdered++;
+      this.orderedBurgers[this.burger.name] = this.amountOrdered;
+      console.log(this.orderedBurgers);
+    },
+    decreaseAmount: function () {
+      if (this.amountOrdered > 0) {
+        this.amountOrdered--;
+        
+      }
+    }
   }
-},
-mounted() {
-    console.log(this.burger);
-  }
-}
+};
 </script>
   
   <!-- Add "scoped" attribute to limit CSS to this component only -->

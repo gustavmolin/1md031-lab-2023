@@ -1,17 +1,21 @@
 <template>
     <div id="orders">
       <div id="orderList">
-        <div v-for="(order, key) in orders" v-bind:key="'order'+key">
-          #{{ key }}: {{ order.orderItems.join(", ") }}
-        </div>
-        <button v-on:click="clearQueue">Clear Queue</button>
-      </div>
-      <div id="dots" v-bind:style="{ background: 'url(' + require('../../public/img/polacks.jpg')+ ')' }">
-          <div v-for="(order, key) in orders" v-bind:style="{ left: order.details.x + 'px', top: order.details.y + 'px'}" v-bind:key="'dots' + key">
-            {{ key }}
-          </div>
-      </div>
+        <div v-for="(order, key) in orders" :key="key">
+    #{{ key }} 
+    <div v-for="(amount, burger) in order.orderItems" :key="burger">
+  {{ burger }}: {{ amount }}
+</div>
+    <div>
+      Name: {{ order.customerInfo.name }}
+      Email: {{ order.customerInfo.email }}
+      Gender: {{ order.customerInfo.gender }}
+      Payment Method: {{ order.customerInfo.paymentMethod }}
     </div>
+  </div>
+</div>
+    </div>
+  
   </template>
   <script>
   import io from 'socket.io-client'

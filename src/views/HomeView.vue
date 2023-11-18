@@ -39,14 +39,6 @@
             <input type="text" id="email" name="em" required="required" placeholder="E-mailaddress">
           </p>
           <p>
-            <label for="streetname">Street</label><br>
-            <input type="text" id="streetname" name="ln" placeholder="Streetname">
-          </p>
-          <p>
-            <label for="housenumber">House</label><br>
-            <input type="number" id="housenumber" name="ln" placeholder="Housenumber">
-          </p>
-          <p>
             <label for="payment">Choose payment method</label>
 
             <select id="payment" name="pay">
@@ -56,6 +48,14 @@
               <option>Cash</option>
             </select>
           </p>
+
+          <div class="map-container">
+            <div class="map" @click="setLocation($event)">
+              <div class="target" v-bind:style="{ left: location.x + 'px', top: location.y + 'px' }">T</div>
+            </div>
+          </div>
+
+
           <div>
             <legend>Gender:</legend>
             <div>
@@ -77,11 +77,11 @@
       </form>
     </section>
     <br>
-    <button type="button">
+
+    <button @click="placeOrder">Place order
       <img
         src="https://img.freepik.com/premium-vector/free-shipping-sticker-free-delivery-badge-with-truck-vector-isolated-background-eps-10_399089-2425.jpg?w=740"
         style="width: 30px;">
-      Send Info
     </button>
 
   </main>
@@ -101,6 +101,7 @@ import menu from '../assets/menu.json'
 
 
 const socket = io();
+
 
 //Define Menuitem cunstructor function
 
@@ -126,31 +127,49 @@ export default {
   },
   data: function () {
     return {
-      menu
-    };
+      menu,
+      location: {
+        x: 0,
+        y: 0,
+      },
+    }
   },
 
   methods: {
     getOrderNumber: function () {
       return Math.floor(Math.random() * 100000);
     },
-    addOrder: function (event) {
+    setLocation: function (event) {
+
       var offset = {
         x: event.currentTarget.getBoundingClientRect().left,
         y: event.currentTarget.getBoundingClientRect().top
       };
+
+      this.location = {
+        x: event.clientX - 10 - offset.x,
+        y: event.clientY - 10 - offset.y
+      };
+    },
+
+    placeOrder: function () {
       socket.emit("addOrder", {
         orderId: this.getOrderNumber(),
-        details: {
-          x: event.clientX - 10 - offset.x,
-          y: event.clientY - 10 - offset.y
-        },
-        orderItems: ["Beans", "Curry"]
-      }
-      );
+        details: this.location,
+        orderItems: this.menu,
+        customerInfo: {
+          name: this.name,
+          email: this.email,
+          gender: this.gender,
+          paymentMethod: this.paymentMethod,
+        }
+      });
     }
-  }
+  },
 }
+
+
+
 </script>
 
 <style>
@@ -251,5 +270,30 @@ button:hover {
   width: 100%;
   margin: auto;
 
+}
+
+.map-container {
+  width: 70%;
+  height: 700px;
+  overflow: scroll;
+}
+
+.map {
+  height: 1078px;
+  width: 1920px;
+  background: url("/public/img/polacks.jpg");
+  background-repeat: no-repeat;
+  cursor: crosshair;
+  text-align: center;
+  position: relative;
+}
+
+.target {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  border-radius: 50%;
+  text-align: center;
 }
 </style>
