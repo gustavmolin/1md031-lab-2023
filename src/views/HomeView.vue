@@ -17,7 +17,7 @@
   </div>
   <main>
     <section id="burgerwindow">
-      <Burger v-for="burger in menu" :key="burger.name" :burger="burger" />
+      <Burger v-for="burger in menu" :key="burger.name" :burger="burger" @updateOrder="updateOrder" />
     </section>
 
 
@@ -31,24 +31,25 @@
         <fieldset>
           <p>
             <label for="fullname">Your name</label><br>
-            <input type="text" id="fullname" name="fn" required="required" placeholder="First- and Last name">
+            <input type="text" id="fullname" name="fn" required="required" placeholder="First- and Last name"
+              v-model="name">
           </p>
 
           <p>
             <label for="email">E-mail</label><br>
-            <input type="text" id="email" name="em" required="required" placeholder="E-mailaddress">
+            <input type="text" id="email" name="em" required="required" placeholder="E-mailaddress" v-model="email">
           </p>
           <p>
             <label for="payment">Choose payment method</label>
 
-            <select id="payment" name="pay">
+            <select id="payment" name="pay" v-model="paymentMethod">
               <option>Card</option>
               <option>Swish</option>
               <option>Invoice</option>
               <option>Cash</option>
             </select>
           </p>
-
+          <h3>Please indicate point of delivery:</h3>
           <div class="map-container">
             <div class="map" @click="setLocation($event)">
               <div class="target" v-bind:style="{ left: location.x + 'px', top: location.y + 'px' }">T</div>
@@ -59,17 +60,18 @@
           <div>
             <legend>Gender:</legend>
             <div>
-              <input type="radio" id="Male" name="drone" value="Male" checked />
+              <input type="radio" id="Male" name="drone" value="Male" v-model="gender" />
               <label for="Male">Male</label>
             </div>
 
             <div>
-              <input type="radio" id="Female" name="drone" value="Female" />
+              <input type="radio" id="Female" name="drone" value="Female" v-model="gender" />
               <label for="Female">Female</label>
             </div>
 
             <div>
-              <input type="radio" id="Do not wish to provide" name="drone" value="Do not wish to provide" />
+              <input type="radio" id="Do not wish to provide" name="drone" value="Do not wish to provide"
+                v-model="gender" />
               <label for="Do not wish to provide">Do not wish to provide</label>
             </div>
           </div>
@@ -132,6 +134,7 @@ export default {
         x: 0,
         y: 0,
       },
+      orderedBurgers: {},
     }
   },
 
@@ -153,10 +156,11 @@ export default {
     },
 
     placeOrder: function () {
+      console.log(this.orderedBurgers)
       socket.emit("addOrder", {
         orderId: this.getOrderNumber(),
         details: this.location,
-        orderItems: this.menu,
+        orderItems: this.orderedBurgers,
         customerInfo: {
           name: this.name,
           email: this.email,
@@ -164,7 +168,15 @@ export default {
           paymentMethod: this.paymentMethod,
         }
       });
-    }
+    },
+    updateOrder: function (order) {
+      if (order.amount > 0) {
+        this.orderedBurgers[order.burgerName] = order.amount;
+      } else {
+        delete this.orderedBurgers[order.burgerName];
+      }
+    },
+
   },
 }
 
@@ -192,25 +204,8 @@ nav ul {
   margin: 0 auto 0 auto;
 }
 
-.wrapper {
-  display: grid;
-  grid-template-columns: 33% 33% 33%;
-  background-color: black;
-  color: white;
-}
-
-.box {
-  background-color: black;
-  color: #fff;
-  border-radius: 5px;
-  padding: 20px;
-  font-size: 110%;
-}
 
 
-#burgerwindow {
-  color: white;
-}
 
 header h1 {
   position: relative;
@@ -233,6 +228,7 @@ header h1 {
   overflow: hidden;
   height: 220px;
   width: 100%;
+  margin-bottom: 10px;
 }
 
 #headpicture {
@@ -243,6 +239,10 @@ header h1 {
 
 }
 
+#orderinfo {
+   border: 4px dotted black;
+   margin-left: 10px;
+}
 section {
   padding: 5px;
   margin: 6px;
@@ -256,7 +256,7 @@ button:hover {
 }
 
 #burgername {
-  margin-left: 20px;
+  margin-left: 40px;
 }
 
 #burgerwindow {
@@ -269,8 +269,13 @@ button:hover {
   background-color: #000000;
   width: 100%;
   margin: auto;
-
+  border: 4px dotted white;
+  color: white;
+  padding: 10px;
+  margin-left: 10px;
 }
+
+
 
 .map-container {
   width: 70%;

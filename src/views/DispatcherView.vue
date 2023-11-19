@@ -1,21 +1,26 @@
 <template>
+    
     <div id="orders">
       <div id="orderList">
-        <div v-for="(order, key) in orders" :key="key">
-    #{{ key }} 
-    <div v-for="(amount, burger) in order.orderItems" :key="burger">
-  {{ burger }}: {{ amount }}
+        <button v-on:click="clearQueue">Clear Queue</button>
+        <div v-for="(order, key) in orders" :key="key" id = "ordernumber">
+   Order #{{ key }} 
+   <div v-for="(amount, burgerName) in order.orderItems" :key="burgerName" >
+  {{ burgerName }}: {{ amount }}
+
 </div>
-    <div>
-      Name: {{ order.customerInfo.name }}
-      Email: {{ order.customerInfo.email }}
-      Gender: {{ order.customerInfo.gender }}
-      Payment Method: {{ order.customerInfo.paymentMethod }}
+ <div id="customerinfo" v-for="item in order.customerInfo" :key="item">
+      {{ item }}
     </div>
+    
+        </div>
+    </div>
+    <div id="dots" v-bind:style="{ background: 'url(' + require('../../public/img/polacks.jpg')+ ')' }">
+          <div v-for="(order, key) in orders" v-bind:style="{ left: order.details.x + 'px', top: order.details.y + 'px'}" v-bind:key="'dots' + key">
+            {{ key }}
   </div>
 </div>
     </div>
-  
   </template>
   <script>
   import io from 'socket.io-client'
@@ -25,7 +30,7 @@
     name: 'DispatcherView',
     data: function () {
       return {
-        orders: null
+        orders: {}
       }
     },
     created: function () {
@@ -40,15 +45,40 @@
   }
   </script>
   <style>
+
+ 
+
+#customerinfo {
+  font-style: italic;
+  
+}
+
+
   #orderList {
     top:1em;
-    left:1em;
-    position: absolute;
-    z-index: 2;
-    color:black;
-    background: rgba(255,255,255, 0.5);
-    padding: 1em;
+  left:1em;
+  position: absolute;
+  z-index: 2;
+  color:black;
+  background: rgba(255,255,255, 0.5);
+  padding: 1em;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-gap: 2em;
+  max-height: 80%;
+  overflow-y: auto;
+  
+
+    
+
+    
   }
+  #ordernumber {
+    border-top: 1px solid black;;
+    padding: 1em;
+    
+  }
+  
   #dots {
     position: relative;
     margin: 0;

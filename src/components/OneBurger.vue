@@ -8,13 +8,13 @@
 
            <p> <ul>
               <li> {{ burger.kCal +' '+ 'kCal'}}</li>
-              <li>Contains <span>{{ burger.containsLactose ? 'lactose' : 'no lactose' }}</span></li>
-              <li>Contains <span>{{ burger.containsGluten ? 'gluten' : 'no gluten' }}</span></li>
+              <li><span v-html="burger.lactose ? 'Contains <strong>lactose</strong>' : '<strong>Lactose</strong> free'"></span></li>
+  <li><span v-html="burger.gluten ? 'Contains <strong>gluten</strong>' : '<strong>Gluten</strong> free'"></span></li>
             </ul> </p>
-            <p>Amount ordered: {{ amountOrdered }}</p>
+            <div id="amountordered">Amount ordered: {{ amountOrdered }} <br>
             <button v-on:click="increaseAmount">Increase</button>
             <button v-on:click="decreaseAmount">Decrease</button>
-        </div>
+        </div></div>
     
 </template>
   
@@ -29,25 +29,28 @@ export default {
   data: function () {
     return {
       amountOrdered: 0,
-      orderedBurgers: [],
     }
   },
   methods: {
     increaseAmount: function () {
       this.amountOrdered++;
-      this.orderedBurgers[this.burger.name] = this.amountOrdered;
-      console.log(this.orderedBurgers);
+      this.$emit('updateOrder', { burgerName: this.burger.name, amount: this.amountOrdered });
     },
     decreaseAmount: function () {
       if (this.amountOrdered > 0) {
         this.amountOrdered--;
+        this.$emit('updateOrder', { burgerName: this.burger.name, amount: this.amountOrdered });
+        
         
       }
     }
   }
 };
 </script>
-  
+ 
   <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>
+<style>
+ #amountordered {
+  text-align: center;
+  }</style>
   
